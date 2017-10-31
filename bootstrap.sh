@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #start mongodb 
-mongod --fork --logpath /var/log/mongodb.log \
+mongod --smallfiles --fork --logpath /var/log/mongodb.log \
 
 #start SOLR
 /opt/solr/bin/solr -Dsolr.solr.home=/opt/OLS/ols-solr/src/main/solr-5-config/ -Dsolr.data.dir=/opt/OLS

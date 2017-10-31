@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 		nano
 
 ENV OLS_HOME /opt/OLS
-ENV CATALINA_OPTS "-Xms2g -Xmx2g"
+ENV CATALINA_OPTS "-Xms500m -Xmx500m"
 ## The 3.1.0.RELEASE has a bug with a hard coded path therefor we use  this commit
 ENV OLS_VERSION dc03b5fc6bd46b4052e231dea046d1d4bba6037d
 ENV SOLR_VERSION 5.5.3
@@ -55,14 +55,14 @@ RUN cd /opt/OLS/ \
 
 ## Start MongoDB and 
 ### Load configuration into MongoDB
-RUN mongod --fork --logpath /var/log/mongodb.log \
+RUN mongod --smallfiles --fork --logpath /tmp/mongodb.log \
 	&& java -Dols.home=/opt/OLS -jar /opt/OLS/ols-apps/ols-config-importer/target/ols-config-importer.jar \
 	&& sleep 10
 
 ## Start MongoDB and SOLR
 ## Then start the indexation process cd /etc/init.d/
-ENV MEMORY_USE "-Xmx4g -Xms4g"
-RUN mongod --fork --logpath /var/log/mongodb.log \
+ENV MEMORY_USE "-Xmx800m -Xms500m"
+RUN mongod --smallfiles --fork --logpath /var/log/mongodb.log \
   && /opt/solr/bin/solr -Dsolr.solr.home=/opt/OLS/ols-solr/src/main/solr-5-config/ -Dsolr.data.dir=/opt/OLS \  
 	&& java ${MEMORY_USE} -Dols.home=/opt/OLS -jar /opt/OLS/ols-apps/ols-loading-app/target/ols-indexer.jar  
 
