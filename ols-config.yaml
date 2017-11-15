@@ -2,15 +2,14 @@
 
 ontologies:
 
-## mono
+## CHEM
 
-  - id: mondo
-    preferredPrefix: MONDO
-    title: Monarch Disease Ontology
-    uri: http://purl.obolibrary.org/obo/mondo.owl
-    description: "a semi-automatically constructed ontology that merges in multiple disease resources to yield a coherent merged ontology"
+  - id: chem
+    preferredPrefix: CHEM
+    title: CHEM
+    uri: http://purl.obolibrary.org/obo/chem.owl
     base_uri:
-      - http://purl.obolibrary.org/obo/MONDO_
+      - http://purl.obolibrary.org/obo/CHEM_
     reasoner: EL
     oboSlims: false
-    ontology_purl : http://purl.obolibrary.org/obo/mondo/pre/mondo.obo
+    ontology_purl : https://raw.githubusercontent.com/simonjupp/chem_ontology/master/chem.owl
