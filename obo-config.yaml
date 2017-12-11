@@ -3,38 +3,27 @@
 
 ontologies:
 
-## CHEM
+## HCAO
 
-  - id: chem
-    preferredPrefix: CHEM
-    title: CHEM
-    uri: http://purl.obolibrary.org/obo/chem.owl
+  - id: hcao
+    preferredPrefix: HCA
+    title: Human Cell Atlas Ontology
+    uri: http://schema.humancellatlas.org/ontology/hcao.owl
     base_uri:
-      - http://purl.obolibrary.org/obo/CHEM_
+      - http://schema.humancellatlas.org/ontology/HCA_
     reasoner: EL
     oboSlims: false
-    ontology_purl : https://raw.githubusercontent.com/simonjupp/chem_ontology/master/chem.owl
+    ontology_purl : https://github.com/HumanCellAtlas/ontology/raw/master/hcao.owl
 
-## PLIV
+## HCAO simple
 
-  - id: pliv
-    preferredPrefix: PLIV
-    title: PLIV
-    uri: http://purl.obolibrary.org/obo/pliv.owl
+  - id: hcaos
+    preferredPrefix: HCA
+    title: Human Cell Atlas Ontology (simple)
+    uri: http://schema.humancellatlas.org/ontology/hcao-simple.owl
     base_uri:
-      - http://purl.obolibrary.org/obo/PLIV_
+      - http://schema.humancellatlas.org/ontology/HCA_
     reasoner: EL
     oboSlims: false
-    ontology_purl : https://raw.githubusercontent.com/simonjupp/pliv_ontology/master/pliv.owl
+    ontology_purl : https://github.com/HumanCellAtlas/ontology/raw/master/hcao-simple.owl
 
-## AMPH
-
-  - id: amph
-    preferredPrefix: AMPH
-    title: AMPH
-    uri: http://purl.obolibrary.org/obo/amph.owl
-    base_uri:
-      - http://purl.obolibrary.org/obo/AMPH_
-    reasoner: EL
-    oboSlims: false
-    ontology_purl : https://raw.githubusercontent.com/simonjupp/amph_ontology/master/amph.owl

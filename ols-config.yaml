@@ -1,15 +1,29 @@
+
 "@context":
 
 ontologies:
 
-## CHEM
+## HCAO
 
-  - id: chem
-    preferredPrefix: CHEM
-    title: CHEM
-    uri: http://purl.obolibrary.org/obo/chem.owl
+  - id: hcao
+    preferredPrefix: HCA
+    title: Human Cell Atlas Ontology
+    uri: http://schema.humancellatlas.org/ontology/hcao.owl
     base_uri:
-      - http://purl.obolibrary.org/obo/CHEM_
+      - http://schema.humancellatlas.org/ontology/HCA_
     reasoner: EL
     oboSlims: false
-    ontology_purl : https://raw.githubusercontent.com/simonjupp/chem_ontology/master/chem.owl
+    ontology_purl : https://github.com/HumanCellAtlas/ontology/raw/master/hcao.owl
+
+## HCAO simple
+
+  - id: hcaos
+    preferredPrefix: HCA
+    title: Human Cell Atlas Ontology (simple)
+    uri: http://schema.humancellatlas.org/ontology/hcao-simple.owl
+    base_uri:
+      - http://schema.humancellatlas.org/ontology/HCA_
+    reasoner: EL
+    oboSlims: false
+    ontology_purl : https://github.com/HumanCellAtlas/ontology/raw/master/hcao-simple.owl
+
