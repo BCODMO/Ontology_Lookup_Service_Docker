@@ -1,0 +1,90 @@
+
+"@context":
+
+ontologies:
+
+## DUO
+
+  - id: duo
+    preferredPrefix: DUO
+    title: Data use ontology
+    uri: http://purl.obolibrary.org/obo/duo.owl
+    description: "DUO is an ontology which represent data use conditions."
+    homepage: https://github.com/EBISPOT/DUO
+    definition_property:
+      - http://purl.obolibrary.org/obo/IAO_0000115
+    synonym_property:
+      - http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+    hierarchical_property:
+      - http://purl.obolibrary.org/obo/BFO_0000050
+      - http://purl.obolibrary.org/obo/RO_0002202
+    base_uri:
+      - http://purl.obolibrary.org/obo/DUO_
+    reasoner: EL
+    oboSlims: false
+    ontology_purl: file:///opt/ols/duo.owl
+
+## test
+
+  - id: test
+    preferredPrefix: TEST
+    title: Test ontology
+    uri: http://purl.obolibrary.org/obo/test.owl
+    description: "TEST is an ontology which represent data use conditions."
+    homepage: https://github.com/EBISPOT/TEST
+    definition_property:
+      - http://purl.obolibrary.org/obo/IAO_0000115
+    synonym_property:
+      - http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+    hierarchical_property:
+      - http://purl.obolibrary.org/obo/BFO_0000050
+      - http://purl.obolibrary.org/obo/RO_0002202
+    base_uri:
+      - http://purl.obolibrary.org/obo/TEST_
+    reasoner: EL
+    oboSlims: false
+    ontology_purl: file:///opt/ols/test.owl
+
+## ecology
+
+  - id: ecology
+    preferredPrefix: BSM
+    title: BSM ecology ontology
+    uri: http://purl.obolibrary.org/obo/test.owl
+    description: "The BSM ecology ontology module"
+    homepage: https://github.com/EBISPOT/TEST
+    definition_property:
+      - http://purl.obolibrary.org/obo/IAO_0000115
+    synonym_property:
+      - http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+    hierarchical_property:
+      - http://purl.obolibrary.org/obo/BFO_0000050
+      - http://purl.obolibrary.org/obo/RO_0002202
+    base_uri:
+      - http://purl.obolibrary.org/obo/
+    reasoner: EL
+    oboSlims: false
+    ontology_purl: file:///opt/ols/ecology.owl
+
+
+
+## anatomy (with modified base_uris)
+  - id: anatomy
+    preferredPrefix: BSM
+    title: BSM anatomy ontology
+    uri: http://purl.obolibrary.org/obo/test.owl
+    description: "The BSM anatomy ontology module"
+    homepage: https://github.com/EBISPOT/TEST
+    definition_property:
+      - http://purl.obolibrary.org/obo/IAO_0000115
+    synonym_property:
+      - http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+    hierarchical_property:
+      - http://purl.obolibrary.org/obo/BFO_0000050
+      - http://purl.obolibrary.org/obo/RO_0002202
+    base_uri:
+      - http://purl.obolibrary.org/obo/
+      - http://bcodmo/
+    reasoner: EL
+    oboSlims: false
+    ontology_purl: file:///opt/ols/anatomy.owl
