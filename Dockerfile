@@ -1,5 +1,9 @@
 FROM ubuntu:16.04
 
+#MASHUP of 
+# 1) https://github.com/EBISPOT/OLS-docker/blob/master/Dockerfile
+# 2) https://github.com/simonjupp/ols-docker/blob/master/Dockerfile
+
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
 RUN apt-get update && apt-get install -y \
@@ -29,10 +33,8 @@ ADD 630_install_solr_service.sh /tmp/install_solr_service.sh
 RUN mkdir /data/ 
 RUN mkdir /data/db 
 
-## Clone GIT repository 
-RUN git clone https://github.com/BCODMO/Ontology_Lookup_Service_Web.git /opt/OLS \
-  && cd  /opt/OLS \
-  && git checkout ${OLS_VERSION}
+## Clone GIT repository - has the BCO-DMOO specific ols-web
+RUN git clone https://github.com/BCODMO/Ontology_Lookup_Service_Web.git /opt/OLS
 
 ### Install and stop solr 
 RUN cd /opt \
@@ -43,14 +45,12 @@ RUN cd /opt \
 	&& service solr stop 
 
 ## Prepare configuration files
+## Append ols.home property to file
 RUN sed -i '$a ols.home /opt/OLS' /opt/OLS/ols-web/src/main/resources/application.properties 
-RUN mv /opt/OLS/ols-apps/ols-config-importer/src/main/resources/ols-config.yaml /opt/OLS/ols-apps/ols-config-importer/src/main/resources/ols-config.yamlorig 
-RUN mv /opt/OLS/ols-apps/ols-config-importer/src/main/resources/obo-config.yaml /opt/OLS/ols-apps/ols-config-importer/src/main/resources/obo-config.yamlorig 
-RUN cp /tmp/ols-config.yaml /opt/OLS/ols-apps/ols-config-importer/src/main/resources/ 
-RUN cp /tmp/obo-config.yaml /opt/OLS/ols-apps/ols-config-importer/src/main/resources/ 
+## Comment out line 6
 RUN sed -i '6 s/^/#/' /opt/OLS/ols-apps/ols-config-importer/src/main/resources/application.properties 
 
-##Maven build 
+## Maven build 
 RUN cd /opt/OLS/ \
 	&& mvn clean install -Dols.home=/opt/OLS 
 
@@ -58,7 +58,7 @@ RUN cd /opt/OLS/ \
 ### Load configuration into MongoDB
 RUN mongod --smallfiles --fork  --logpath /var/log/mongodb.log \
     && cd ${OLS_HOME} \
-    && java -Dols.obofoundry.ontology.config=foo.yaml -Dols.ontology.config=file://${OLS_HOME}/ols-config.yaml -jar ${OLS_HOME}/ols-config-importer.jar \
+    && java -Dols.ontology.config=file://${OLS_HOME}/ols-config.yaml -jar ${OLS_HOME}/ols-config-importer.jar \
     && sleep 10
     
 ## Start MongoDB and SOLR
@@ -68,20 +68,14 @@ RUN mongod --smallfiles --fork --logpath /var/log/mongodb.log \
   && java ${JAVA_OPTS} -Dols.home=${OLS_DATA} -jar ${OLS_HOME}/ols-indexer.jar
 
 ## Copy webapp to tomcat dir, replace the ROOT webapplication with boot-ols.war and set permissions
-RUN rm -R /var/lib/tomcat7/webapps/ROOT/
-RUN cp /opt/OLS/ols-web/target/ols-boot.war /var/lib/tomcat7/webapps/ROOT.war
-RUN chown -R tomcat7:tomcat7 /opt/OLS/
+#RUN rm -R /var/lib/tomcat7/webapps/ROOT/
+#RUN cp /opt/OLS/ols-web/target/ols-boot.war /var/lib/tomcat7/webapps/ROOT.war
+#RUN chown -R tomcat7:tomcat7 /opt/OLS/
 
 ## Expose the tomcat port
 EXPOSE 8080
 
-## Add the bootstrap file and make it executable
-ADD bootstrap.sh /opt/OLS/
-RUN chmod +x /opt/OLS/bootstrap.sh
-
-CMD /opt/OLS/bootstrap.sh
-
 CMD cd ${OLS_HOME} \
     && mongod --smallfiles --fork --logpath /var/log/mongodb.log \
     && /opt/solr-${SOLR_VERSION}/bin/solr -Dsolr.solr.home=${OLS_HOME}/solr-5-config/ -Dsolr.data.dir=${OLS_HOME} \
-    && java -jar -Dols.home=${OLS_HOME} ols-boot.war
+    && java -jar -Dols.home=${OLS_HOME} /opt/OLS/ols-web/target/ols-boot.war
